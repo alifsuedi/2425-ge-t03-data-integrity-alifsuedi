@@ -11,7 +11,7 @@ import java.util.Arrays;
  * 12S23039-Prisca R. Manurung
  */
 public class Driver2 {
-    public static void main(String[] _args) {
+    public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
         Course[] courses = new Course[100];
