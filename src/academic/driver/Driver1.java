@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * Driver class to handle course, student, and enrollment data.
- * Ensures no duplication of data.
- * 
  * Authors:
  * 12S23025-Alif Aflah Suedi
  * 12S23039-Prisca R. Manurung
