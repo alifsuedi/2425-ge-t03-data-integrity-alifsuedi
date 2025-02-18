@@ -3,21 +3,18 @@ package academic.driver;
 import academic.model.Course;
 import academic.model.Student;
 import academic.model.Enrollment;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 
 /**
- * Authors:
- * 12S23025-Alif Aflah Suedi
- * 12S23039-Prisca R. Manurung
+ * @author 12S23025-Alif Aflah Suedi
+ * @author 12S23039-Prisca R. Manurung
  */
 public class Driver1 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Course> courses = new ArrayList<>();
-        ArrayList<Student> students = new ArrayList<>();
-        ArrayList<Enrollment> enrollments = new ArrayList<>();
+        List<Course> courses = new ArrayList<>();
+        List<Student> students = new ArrayList<>();
+        List<Enrollment> enrollments = new ArrayList<>();
 
         while (true) {
             String input = scanner.nextLine();
@@ -59,36 +56,28 @@ public class Driver1 {
             }
         }
 
-        // Sorting Lists
-        courses.sort(Comparator.comparing(Course::getCode)); // Sort ascending
-        students.sort(Comparator.comparing(Student::getId)); // Sort ascending
+        // Sorting students by ID to fix t03-01-01 issue
+        students.sort(Comparator.comparing(Student::getId));
+        
+        // Sorting enrollments by course code and then student ID
         enrollments.sort(Comparator.comparing(Enrollment::getCourseCode)
-                .thenComparing(Enrollment::getStudentId)
-                .thenComparing(Enrollment::getAcademicYear)
-                .thenComparing(Enrollment::getSemester));
+                .thenComparing(Enrollment::getStudentId));
+        
+        // Sorting courses by code
+        courses.sort(Comparator.comparing(Course::getCode));
 
-        printCourses(courses);
-        printStudents(students);
-        printEnrollments(enrollments);
-
-        scanner.close();
-    }
-
-    private static void printCourses(ArrayList<Course> courses) {
         for (Course course : courses) {
             System.out.println(course.getCode() + "|" + course.getName() + "|" + course.getCredits() + "|" + course.getGrade());
         }
-    }
 
-    private static void printStudents(ArrayList<Student> students) {
         for (Student student : students) {
             System.out.println(student.getId() + "|" + student.getName() + "|" + student.getYear() + "|" + student.getMajor());
         }
-    }
 
-    private static void printEnrollments(ArrayList<Enrollment> enrollments) {
         for (Enrollment enrollment : enrollments) {
             System.out.println(enrollment.getCourseCode() + "|" + enrollment.getStudentId() + "|" + enrollment.getAcademicYear() + "|" + enrollment.getSemester() + "|None");
         }
+
+        scanner.close();
     }
 }
