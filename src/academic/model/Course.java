@@ -1,8 +1,8 @@
 package academic.model;
 
 /**
- * @author NIM Nama
- * @author NIM Nama
+ * @author 12S23025-Alif Aflah Suedi 
+ * @author 12S23039-Prisca R. Manurung
  */
 
 public class Course {

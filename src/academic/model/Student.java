@@ -1,10 +1,9 @@
 package academic.model;
 
 
-
 /**
- * @author 12S23013 Andika Immanuel Nadapdap
- * @author 12S23033 Oloan Nainggolan
+ * @author 12S23025-Alif Aflah Suedi 
+ * @author 12S23039-Prisca R. Manurung
  */
 
  public class Student {
