@@ -33,5 +33,9 @@ public class Course {
     public String getGrade() {
         return grade;
     }
+    @Override
+    public String toString() {
+        return  code + '|' + name + '|' + credits +'|' + grade;
+    }
 }
 

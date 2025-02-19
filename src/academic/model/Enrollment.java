@@ -5,31 +5,35 @@ package academic.model;
  * @author 12S23039-Prisca R. Manurung
  */
 public class Enrollment {
-    private String courseCode;
-    private String studentId;
-    private String academicYear;
+    private String code;
+    private String nim;
+    private String years;
     private String semester;
+   
 
-    public Enrollment(String courseCode, String studentId, String academicYear, String semester) {
-        this.courseCode = courseCode;
-        this.studentId = studentId;
-        this.academicYear = academicYear;
+    public Enrollment(String code, String nim, String years, String semester, String[] hal) {
+        this.code = code;
+        this.nim = nim;
+        this.years = years;
         this.semester = semester;
+     
     }
 
-    public String getCourseCode() {
-        return courseCode;
+    public String getCode() {
+        return code;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public String getNim() {
+        return nim;
     }
 
-    public String getAcademicYear() {
-        return academicYear;
+    public String getYears() {
+        return years;
     }
 
-    public String getSemester() {
-        return semester;
-    }
+    @Override
+    public String toString() {
+    return code + "|" + nim + "|" + years + "|" + semester + "|None";
+}
+
 }

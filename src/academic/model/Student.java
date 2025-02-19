@@ -1,37 +1,45 @@
 package academic.model;
 
+
+
 /**
- * @author 12S23025-Alif Aflah Suedi
- * @author 12S23039-Prisca R. Manurung
+ * @author 12S23013 Andika Immanuel Nadapdap
+ * @author 12S23033 Oloan Nainggolan
  */
 
-
  public class Student {
-     private String id;
-     private String name;
-     private int year;
-     private String major;
- 
-     public Student(String id, String name, int year, String major) {
-         this.id = id;
-         this.name = name;
-         this.year = year;
-         this.major = major;
-     }
- 
-     public String getId() {
-         return id;
-     }
- 
-     public String getName() {
-         return name;
-     }
- 
-     public int getYear() {
-         return year;
-     }
- 
-     public String getMajor() {
-         return major;
-     }
- }
+    private String code;
+    private String name;
+    private String years;
+    private String major;
+
+    public Student(String code, String name, String years, String major) {
+        this.code = code;
+        this.name = name;
+        this.years = years;
+        this.major = major;
+        }
+
+        public String getCode() {
+        return code;
+        }
+
+        public String getName() {
+        return name;
+        }
+
+        public String getYears() {
+        return years;
+        }
+
+        public String getMajor() {
+        return major;
+        }
+
+   
+    @Override
+    public String toString() {
+        return code + "|" + name + "|" + years + "|" + major;
+    }
+
+        };

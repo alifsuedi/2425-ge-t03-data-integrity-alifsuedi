@@ -3,83 +3,114 @@ package academic.driver;
 import academic.model.Course;
 import academic.model.Student;
 import academic.model.Enrollment;
-import java.util.*;
+import java.util.Scanner;
 
 /**
  * @author 12S23025-Alif Aflah Suedi
  * @author 12S23039-Prisca R. Manurung
  */
 public class Driver2 {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        List<Course> courses = new ArrayList<>();
-        List<Student> students = new ArrayList<>();
-        List<Enrollment> enrollments = new ArrayList<>();
+    public static void main(String[] _args) {
+        Scanner input = new Scanner(System.in);
+
+        Course[] courses = new Course[100];
+        Student[] students = new Student[100];
+        Enrollment[] enrollments = new Enrollment[100];
+
+        int courseCount = 0;
+        int studentCount = 0;
+        int enrollmentCount = 0;
+
+        StringBuilder invalidEntries = new StringBuilder();
 
         while (true) {
-            String input = scanner.nextLine();
-            if (input.equals("---")) {
+            String line = input.nextLine().trim();
+
+            if (line.equals("---")) {
                 break;
             }
-            String[] segments = input.split("#");
-            if (segments.length > 0) {
-                String command = segments[0];
-                switch (command) {
-                    case "course-add":
-                        if (segments.length == 5) {
-                            String code = segments[1];
-                            if (courses.stream().noneMatch(c -> c.getCode().equals(code))) {
-                                String name = segments[2];
-                                int credits = Integer.parseInt(segments[3]);
-                                String grade = segments[4];
-                                courses.add(new Course(code, name, credits, grade));
+
+            String[] data = line.split("#");
+
+            switch (data[0]) {
+                case "course-add":
+                    if (data.length == 5) {
+                        String code = data[1];
+                        String name = data[2];
+                        int credits = Integer.parseInt(data[3]);
+                        String grade = data[4];
+                        courses[courseCount++] =  new Course(code, name, credits, grade);     
+                    }
+                    break;
+                case "student-add":
+                    if (data.length == 5) {
+                        String code = data[1];
+                            String name = data[2];
+                            String year = data[3];
+                            String major = data[4];
+                            students[studentCount++] = new Student(code, name, year, major);
+                    }
+                    break;
+                case "enrollment-add":
+                    if (data.length == 5) {
+                        String coursecode = data[1];
+                        String studentnim = data[2];
+                        
+                        boolean courseExists = false;
+                        boolean studentExists = false;
+                        
+                        for (int i = 0; i < courseCount; i++) {
+                            if (courses[i].getCode().equals(coursecode)) {
+                                courseExists = true;
+                                break;
                             }
                         }
-                        break;
-                    case "student-add":
-                        if (segments.length == 5) {
-                            String id = segments[1];
-                            if (students.stream().noneMatch(s -> s.getId().equals(id))) {
-                                String name = segments[2];
-                                int year = Integer.parseInt(segments[3]);
-                                String major = segments[4];
-                                students.add(new Student(id, name, year, major));
+                        
+                        for (int i = 0; i < studentCount; i++) {
+                            if (students[i].getCode().equals(studentnim)) {
+                                studentExists = true;
+                                break;
                             }
                         }
-                        break;
-                    case "enrollment-add":
-                        if (segments.length == 5) {
-                            String courseCode = segments[1];
-                            String studentId = segments[2];
-                            String academicYear = segments[3];
-                            String semester = segments[4];
-                            if (enrollments.stream().noneMatch(e -> e.getCourseCode().equals(courseCode) && e.getStudentId().equals(studentId) && e.getAcademicYear().equals(academicYear) && e.getSemester().equals(semester))) {
-                                enrollments.add(new Enrollment(courseCode, studentId, academicYear, semester));
-                            }
+                        
+                        if (!courseExists) {
+                            invalidEntries.append("invalid course|").append(coursecode).append("\n");
+                        } else if (!studentExists) {
+                            invalidEntries.append("invalid student|").append(studentnim).append("\n");
+                        } else {
+                            String courseCode = data[1];
+                            String studentId = data[2];
+                            String year = data[3];
+                            String semester = data[4];
+                            String[] defaultNotes = {"None"};
+                            enrollments[enrollmentCount++] = new Enrollment(courseCode, studentId, year, semester, defaultNotes);
+                           
                         }
-                        break;
-                }
+                    }
+                    break;
+                default:
+                    System.out.println("Error: Perintah tidak dikenali.");
             }
         }
 
-        // Sorting lists
-        courses.sort(Comparator.comparing(Course::getCode));
-        students.sort(Comparator.comparing(Student::getId));
-        enrollments.sort(Comparator.comparing(Enrollment::getCourseCode).thenComparing(Enrollment::getStudentId));
+        input.close();
 
-        // Print sorted lists
-        for (Course course : courses) {
-            System.out.println(course.getCode() + "|" + course.getName() + "|" + course.getCredits() + "|" + course.getGrade());
+        System.out.print(invalidEntries.toString());
+
+      
+        for (int i = courseCount - 1; i >= 0; i--) {
+            System.out.println(courses[i].toString());
         }
 
-        for (Student student : students) {
-            System.out.println(student.getId() + "|" + student.getName() + "|" + student.getYear() + "|" + student.getMajor());
+
+        for (int i = 0 ; i < studentCount ; i++) {
+            System.out.println(students[i].toString());
         }
 
-        for (Enrollment enrollment : enrollments) {
-            System.out.println(enrollment.getCourseCode() + "|" + enrollment.getStudentId() + "|" + enrollment.getAcademicYear() + "|" + enrollment.getSemester() + "|None");
-        }
 
-        scanner.close();
+        for (int i = 0; i < enrollmentCount; i++) {
+            System.out.println(enrollments[i].toString());
+        }
+        
     }
 }
